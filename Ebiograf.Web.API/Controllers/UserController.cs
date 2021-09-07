@@ -37,9 +37,9 @@ namespace Ebiograf.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthenticateModel model)
+        public  async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
         {
-            var user = context.Authenticate(model.UserName, model.Password);
+            var user = await context.Authenticate(model.UserName, model.Password);
             
             if (user == null)
             {
@@ -60,29 +60,20 @@ namespace Ebiograf.Web.Api.Controllers
             // return basic user info and authentication token
             var userModel = _mapper.Map<UserModel>(user);
             userModel.Token = tokenString;
-            //return Ok(new
-            //{
-            //    Id = user.UserID,
-            //    username = user.UserName,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    EmailAddress = user.EmailAddress,
-            //    Phone = user.Phone,
-            //    DateCreated = user.DateCreated,
-            //    token = tokenString
-            //});
+            userModel.DateCreated = DateTime.UtcNow;
+            userModel.UserName.ToLower();
             return Ok(userModel);
-           // return Ok(user);
+
         }
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterModelUser model)
+        public async Task<IActionResult> Register([FromBody] RegisterModelUser model)
         {
             var user = _mapper.Map<User>(model);
             try
             {
                 // Create user
-                context.Create(user, model.Password);
+                await context .Create(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -108,9 +99,9 @@ namespace Ebiograf.Web.Api.Controllers
         [HttpGet("{id}")]
         [Authorize]
 
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var user = context.GetById(id);
+            var user = await context.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }
@@ -118,16 +109,16 @@ namespace Ebiograf.Web.Api.Controllers
         [HttpDelete("id")]
         [Authorize]
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            context.delete(id);
+            await context.delete(id);
             return Ok();
         }
 
 
         [HttpPut("{id}")]
         [Authorize]
-        public IActionResult Update(int id, [FromBody]UpdateModel model)
+        public async Task<IActionResult> Update(int id, [FromBody]UpdateModel model)
         {
             // Map modelto entity and set id.
             var user = _mapper.Map<User>(model);
@@ -136,7 +127,7 @@ namespace Ebiograf.Web.Api.Controllers
             try
             {
                 // Update user
-                context.Update(user, model.Password);
+               await context.Update(user, model.Password);
                 return Ok();
             }
             catch (Exception e)

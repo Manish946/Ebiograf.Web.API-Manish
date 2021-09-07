@@ -8,11 +8,11 @@ namespace EBiograf.Web.Api.Services
 {
     public interface IUserService
     {
-        User Authenticate(string username, string password);
+        Task<User> Authenticate(string username, string password);
         Task<List<User>> GetAllUsers();
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void delete(int id);
+        Task<User> GetById(int id);
+        Task<User> Create(User user, string password);
+        Task<User> Update(User user, string password = null);
+        Task<User> delete(int id);
     }
 }
