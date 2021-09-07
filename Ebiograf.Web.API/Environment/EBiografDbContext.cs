@@ -1,4 +1,5 @@
-﻿using EBiograf.Web.Api.Models;
+﻿using Ebiograf.Web.API.Models.Movie;
+using EBiograf.Web.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace EBiograf.Web.Api.Environment
 
         //  Migrating Database Table Users into SqlDatabase.
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
     }
 }

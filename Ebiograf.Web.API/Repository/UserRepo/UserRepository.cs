@@ -119,9 +119,19 @@ namespace EBiograf.Web.Api.Repository.UserRepo
                 var newPassword = CreatePasswordHash(password);
                 Updateuser.Password = newPassword;
             }
+            if (!string.IsNullOrWhiteSpace(user.EmailAddress))
+            {
+                Updateuser.EmailAddress = user.EmailAddress;
+
+            }
+            if (!string.IsNullOrWhiteSpace(user.Phone))
+            {
+                Updateuser.Phone = user.Phone;
+
+            }
             context.Users.Update(Updateuser);
             context.SaveChanges();
-            return user;
+            return Updateuser;
         }
 
         public async Task<List<User>> GetAllUsers()
