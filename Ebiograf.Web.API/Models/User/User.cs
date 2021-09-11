@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ebiograf.Web.API.Models.Bookings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,6 +44,9 @@ namespace EBiograf.Web.Api.Models
         [Column(TypeName = "nvarchar(16)")]
         [Required]
         public string Phone { get; set; }
+
+        // Nagvigation Property for User
+        public ICollection<Booking> Bookings { get; set; }
 
     }
 }

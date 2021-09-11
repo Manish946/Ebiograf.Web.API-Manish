@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Ebiograf.Web.API.Models.Movie;
+using Ebiograf.Web.API.ModelsDto;
+using Ebiograf.Web.API.ModelsDto.GenreDto;
+using Ebiograf.Web.API.ModelsDto.MovieDto;
 using EBiograf.Web.Api.Models;
 
 namespace EBiograf.Web.Api.Helper
@@ -13,11 +17,24 @@ namespace EBiograf.Web.Api.Helper
     {
         public AutoMapperProfile()
         {
-
             CreateMap<User, UserModel>();
             CreateMap<RegisterModelUser, User>();
             CreateMap<UpdateModel, User>();
+            //CreateMap<MovieWithGenreName, Movie>().ReverseMap();
+            // This will Map the remaning property and in this case Gernes Names will be stored in an array from Collection Genre.
+            CreateMap<Movie, MovieWithGenreName>()
+                .ForMember(movie => movie.Genres,
+                igenre => igenre.MapFrom(genre => genre.Genres
+                .Select(g => g.GenreName).ToArray()));
 
+            CreateMap<MovieWithGenreName, Movie>()
+                .ForMember(Movie => Movie.Genres, Igenre => Igenre.MapFrom(genre => new Genre() { }));
+
+            CreateMap<CreateMovieModel, Movie>().ReverseMap();
+            CreateMap<UpdateMovieModel, Movie>().ReverseMap();
+            CreateMap<Genre, GenreDto>();
+            CreateMap<GenreDto, Genre>();
+            CreateMap<CreateGenre, Genre>().ReverseMap();
         }
     }
 }

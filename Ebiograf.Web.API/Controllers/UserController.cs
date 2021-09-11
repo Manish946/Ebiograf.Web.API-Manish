@@ -34,35 +34,45 @@ namespace Ebiograf.Web.Api.Controllers
             _appSettings = appSetings.Value;
         }
 
+        //AllowAnonymous lets users who have not been authenticated access the action or controller.In short, it knows based on the token it receives from the client.
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public  async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
         {
-            var user = await context.Authenticate(model.UserName, model.Password);
-            
-            if (user == null)
+            try
             {
-                return BadRequest(new { message = "Username or password is incorrect" });
-            }
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[] {
+                var user = await context.Authenticate(model.UserName, model.Password);
+
+                if (user == null)
+                {
+                    return BadRequest(new { message = "Username or password is incorrect" });
+                }
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new System.Security.Claims.ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name, user.UserID.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-            // return basic user info and authentication token
-            var userModel = _mapper.Map<UserModel>(user);
-            userModel.Token = tokenString;
-            userModel.DateCreated = DateTime.UtcNow;
-            userModel.UserName.ToLower();
-            return Ok(userModel);
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+                // return basic user info and authentication token
+                var userModel = _mapper.Map<UserModel>(user);
+                userModel.Token = tokenString;
+                userModel.DateCreated = DateTime.UtcNow;
+                userModel.UserName.ToLower();
+                return Ok(userModel);
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+            
 
         }
         [AllowAnonymous]
@@ -73,7 +83,7 @@ namespace Ebiograf.Web.Api.Controllers
             try
             {
                 // Create user
-                await context .Create(user, model.Password);
+                await context.Create(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -83,16 +93,25 @@ namespace Ebiograf.Web.Api.Controllers
             }
         }
 
-        //AllowAnonymous lets users who have not been authenticated access the action or controller.In short, it knows based on the token it receives from the client.
         //Http Get Request to Get All Users Frmo the Database.
         [HttpGet]
         [Authorize]
 
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await context.GetAllUsers();
-            var model = _mapper.Map<IList<UserModel>>(users);
-            return Ok(model);
+            try
+            {
+                var users = await context.GetAllUsers();
+                var model = _mapper.Map<IList<UserModel>>(users);
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+
 
         }
 
@@ -101,9 +120,19 @@ namespace Ebiograf.Web.Api.Controllers
 
         public async Task<IActionResult> GetById(int id)
         {
-            var user = await context.GetById(id);
-            var model = _mapper.Map<UserModel>(user);
-            return Ok(model);
+            try
+            {
+                var user = await context.GetById(id);
+                var model = _mapper.Map<UserModel>(user);
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+
         }
         
         [HttpDelete("id")]
@@ -111,8 +140,17 @@ namespace Ebiograf.Web.Api.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await context.delete(id);
-            return Ok();
+            try
+            {
+                await context.delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+
+            }
+
         }
 
 

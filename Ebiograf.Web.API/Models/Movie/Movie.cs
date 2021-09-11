@@ -17,6 +17,10 @@ namespace Ebiograf.Web.API.Models.Movie
         [Required]
         public int MovieID { get; set; }
 
+        [Column(TypeName = "nvarchar(256)")]
+        [Required]
+        public string Title { get; set; }
+
         [Column(TypeName = "nvarchar(512)")]
         [Required]
         public string ImgLink { get; set; }
@@ -25,9 +29,9 @@ namespace Ebiograf.Web.API.Models.Movie
         [Required]
         public string Description { get; set; }
 
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "int")]
         [Required]
-        public DateTime Duration { get; set; }
+        public int Duration { get; set; }
 
         [Column(TypeName = "nvarchar(16)")]
         [Required]
@@ -45,11 +49,15 @@ namespace Ebiograf.Web.API.Models.Movie
         [Required]
         public string Country { get; set; }
 
-        public ICollection<Genre> Genre { get; set; }
+        // Nagvigation Property for Genre
+        public ICollection<Genre> Genres { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [Required]
         public string TrailerLink { get; set; }
 
-    }   
+        // Nagvigation Property for Genre
+        public ICollection<Show.Show> Shows { get; set; }
+
+    }
 }

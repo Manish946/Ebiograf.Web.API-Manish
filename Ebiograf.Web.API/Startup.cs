@@ -20,6 +20,11 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using EBiograf.Web.Api.Services;
 using Microsoft.IdentityModel.Tokens;
+using Ebiograf.Web.API.Services.MovieService;
+using Ebiograf.Web.API.Repository.MovieRepo;
+using Newtonsoft.Json;
+using Ebiograf.Web.API.Repository.GenreRepo;
+using Ebiograf.Web.API.Services.GenreService;
 
 namespace Ebiograf.Web.API
 {
@@ -41,7 +46,7 @@ namespace Ebiograf.Web.API
             {
                 services.AddDbContext<EBiografDbContext>();
             }
-
+            
             services.AddCors();
             services.AddControllers();
             // Adding DbContext class to services. connection string to mssql database  Then we can add migration.
@@ -92,40 +97,12 @@ namespace Ebiograf.Web.API
             // Adding User Scope so that we can call from Endpoint.
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ebiograf.Web.API", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-            //    {
-            //        Name="Authorization",
-            //        Type= SecuritySchemeType.ApiKey,
-            //        Scheme ="Bearer",
-            //        BearerFormat ="JWT",
-            //        In=ParameterLocation.Header,
-            //        Description= "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
-            //    }
-            //    );;
-
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //    {
-            //        {
-            //            new OpenApiSecurityScheme
-            //            {
-            //                Reference = new OpenApiReference
-            //                {
-            //                    Type = ReferenceType.SecurityScheme,
-            //                    Id = "Bearer"
-            //                },
-            //                Scheme = "oauth2",
-            //                Name="Bearer",
-            //                In=ParameterLocation.Header,
-            //            },
-            //            new string[]{ }
-            //        }
-            //    });
-
-            //}
-            //);
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddControllers()
+               .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" });

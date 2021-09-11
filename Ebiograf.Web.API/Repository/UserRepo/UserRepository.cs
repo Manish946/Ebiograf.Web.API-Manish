@@ -13,10 +13,11 @@ namespace EBiograf.Web.Api.Repository.UserRepo
     {
         private EBiografDbContext context;
 
-        public UserRepository(EBiografDbContext _context)
+        public UserRepository(EBiografDbContext _context)  // Dependency Injection
         {
             context = _context;
         }
+
         public async Task<User> Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -83,6 +84,7 @@ namespace EBiograf.Web.Api.Repository.UserRepo
 
         public async Task<User> GetById(int id)
         {
+
             return await context.Users.FindAsync(id);
         }
 

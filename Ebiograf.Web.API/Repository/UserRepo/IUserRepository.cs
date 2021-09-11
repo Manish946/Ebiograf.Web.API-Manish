@@ -16,5 +16,6 @@ namespace EBiograf.Web.Api.Repository.UserRepo
         Task<User> Create(User user, string password);
         Task<User> Update(User user, string password = null);
         Task<User> delete(int id);
+
     }
 }
