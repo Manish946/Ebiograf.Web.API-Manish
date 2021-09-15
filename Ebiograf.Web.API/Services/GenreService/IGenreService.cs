@@ -12,7 +12,7 @@ namespace Ebiograf.Web.API.Services.GenreService
         public Task<IEnumerable<GenreDto>> GetGenres();
         public  Task<GenreDto> GetGenreByID(int GenreID);
         public Task<Genre> CreateGenre(CreateGenre createGenre);
-        public Task<Genre> UpdateGenre(GenreDto updateGenre);
+        public Task<Genre> UpdateGenre(GenreDto updateGenre, int GenreID);
         public Task<Genre> DeleteGenre(int GenreID);
 
     }

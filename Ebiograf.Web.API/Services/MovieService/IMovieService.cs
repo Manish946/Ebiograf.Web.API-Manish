@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ebiograf.Web.API.Services.MovieService
 {
-    public interface IMovieService
+    public interface ImovieRepository
     {
         public Task<IEnumerable<MovieWithGenreName>> GetMovies();
         public Task<MovieWithGenreName> GetMoviesByID(int MovieID);

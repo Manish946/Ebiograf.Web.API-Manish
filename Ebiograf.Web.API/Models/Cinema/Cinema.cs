@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Ebiograf.Web.API.Models.Cinema
@@ -27,7 +28,7 @@ namespace Ebiograf.Web.API.Models.Cinema
         // Navigation Properties
 
         public ICollection<CinemaHall> CinemaHalls { get; set; }
-
+        [JsonIgnore]
         public int CinemaAddressID { get; set; }
         public CinemaAddress CinemaAddresses { get; set; }
 

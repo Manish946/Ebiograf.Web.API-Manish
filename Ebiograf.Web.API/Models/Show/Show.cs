@@ -39,7 +39,7 @@ namespace Ebiograf.Web.API.Models.Show
         public int MovieID { get; set; }
         public Movie.Movie Movie { get; set; }
 
-        public int? CinemaHallID { get; set; }
+        public int CinemaHallID { get; set; }
         public CinemaHall CinemaHall { get; set; }
 
     }

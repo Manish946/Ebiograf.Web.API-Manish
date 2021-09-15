@@ -75,12 +75,12 @@ namespace Ebiograf.Web.API.Controllers
             }
         }
 
-        [HttpPut("UpdateGenre")]
-        public async Task<IActionResult> UpdateGenre([FromBody] GenreDto updateGenre)
+        [HttpPut("UpdateGenre/{GenreID}")]
+        public async Task<IActionResult> UpdateGenre([FromBody] GenreDto updateGenre,int GenreID)
         {
             try
             {
-                var newGenre = await context.UpdateGenre(updateGenre);
+                var newGenre = await context.UpdateGenre(updateGenre, GenreID);
                 return Ok(newGenre);
             }
             catch (Exception ex)
@@ -91,12 +91,12 @@ namespace Ebiograf.Web.API.Controllers
             }
         }
 
-        [HttpDelete("DeleteGenre")]
-        public async Task<IActionResult> DeleteGenre(int DeleteGenre)
+        [HttpDelete("DeleteGenre/{GenreID}")]
+        public async Task<IActionResult> DeleteGenre(int GenreID)
         {
             try
             {
-                var deletGenre = await context.DeleteGenre(DeleteGenre);
+                var deletGenre = await context.DeleteGenre(GenreID);
                 return Ok(deletGenre);
             }
             catch (Exception ex)

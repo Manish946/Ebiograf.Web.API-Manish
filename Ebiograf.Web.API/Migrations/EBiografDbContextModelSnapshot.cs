@@ -366,7 +366,7 @@ namespace Ebiograf.Web.API.Migrations
                     b.ToTable("ShowSeats");
                 });
 
-            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.Snack", b =>
+            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.OrderSnack", b =>
                 {
                     b.Property<int>("SnackID")
                         .ValueGeneratedOnAdd()
@@ -376,18 +376,42 @@ namespace Ebiograf.Web.API.Migrations
                     b.Property<int>("BookingID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(62)");
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("SnackID");
 
                     b.HasIndex("BookingID");
 
-                    b.ToTable("Snacks");
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("OrderSnacks");
+                });
+
+            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Ebiograf.Web.API.Models.Bookings.Booking", b =>
@@ -510,15 +534,23 @@ namespace Ebiograf.Web.API.Migrations
                     b.Navigation("Show");
                 });
 
-            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.Snack", b =>
+            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.OrderSnack", b =>
                 {
                     b.HasOne("Ebiograf.Web.API.Models.Bookings.Booking", "Booking")
-                        .WithMany("Snacks")
+                        .WithMany("OrderSnacks")
                         .HasForeignKey("BookingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ebiograf.Web.API.Models.Snacks.Product", "Product")
+                        .WithMany("OrderSnacks")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Booking");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EBiograf.Web.Api.Models.User", b =>
@@ -528,11 +560,11 @@ namespace Ebiograf.Web.API.Migrations
 
             modelBuilder.Entity("Ebiograf.Web.API.Models.Bookings.Booking", b =>
                 {
+                    b.Navigation("OrderSnacks");
+
                     b.Navigation("Payment");
 
                     b.Navigation("ShowSeats");
-
-                    b.Navigation("Snacks");
                 });
 
             modelBuilder.Entity("Ebiograf.Web.API.Models.Cinema.Cinema", b =>
@@ -562,6 +594,11 @@ namespace Ebiograf.Web.API.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("ShowSeats");
+                });
+
+            modelBuilder.Entity("Ebiograf.Web.API.Models.Snacks.Product", b =>
+                {
+                    b.Navigation("OrderSnacks");
                 });
 #pragma warning restore 612, 618
         }

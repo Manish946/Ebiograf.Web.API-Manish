@@ -36,8 +36,10 @@ namespace Ebiograf.Web.API.Models.Bookings
         public int UserID { get; set; }
         public User User { get; set; }
         
+        public int ShowID { get; set; }
+        public Show.Show Show { get; set; }
         public ICollection<ShowSeat> ShowSeats { get; set; }
-        public ICollection<Snack> Snacks { get; set; }
+        public ICollection<OrderSnack> OrderSnacks { get; set; }
 
         public virtual Payment Payment { get; set; }
     }

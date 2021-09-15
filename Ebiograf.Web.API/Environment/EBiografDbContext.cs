@@ -26,13 +26,14 @@ namespace EBiograf.Web.Api.Environment
         public DbSet<GenreMovie> GenreMovie {get;set;}
         public DbSet<Show> Shows { get; set; }
         public DbSet<ShowSeat> ShowSeats { get; set; }
-        public DbSet<Snack> Snacks { get; set; }
+        public DbSet<OrderSnack> OrderSnacks { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<CinemaAddress> CinemaAddresses { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<CinemaSeat> CinemaSeats { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         // Relationship Configuring via the Fluent API for EF Core to be able to map it successfully.
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -51,10 +51,10 @@ namespace Ebiograf.Web.API.Repository.GenreRepo
             return await mapper.ProjectTo<GenreDto>(context.Genres).Where(x=>x.GenreID == GenreID).SingleOrDefaultAsync();
         }
 
-        public async Task<Genre> UpdateGenre(GenreDto updateGenre)
+        public async Task<Genre> UpdateGenre(GenreDto updateGenre, int GenreID)
         {
             var UpdatedGenreMap = mapper.Map<Genre>(updateGenre);
-            var UpdatedGenre = await context.Genres.FirstOrDefaultAsync(g => g.GenreID == UpdatedGenreMap.GenreID);
+            var UpdatedGenre = await context.Genres.FirstOrDefaultAsync(g => g.GenreID == GenreID);
             if (UpdatedGenre == null)
             {
                 throw new AppException("Genre not found");

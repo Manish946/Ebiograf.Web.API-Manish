@@ -19,10 +19,10 @@ namespace Ebiograf.Web.API.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        public IMovieService context { get; set; }
+        public ImovieRepository context { get; set; }
         private readonly IMapper mapper;
 
-        public MovieController(IMovieService _context, IMapper _mapper)
+        public MovieController(ImovieRepository _context, IMapper _mapper)
         {
             context = _context;
             mapper = _mapper;

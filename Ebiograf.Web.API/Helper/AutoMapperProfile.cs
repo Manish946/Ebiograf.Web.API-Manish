@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Ebiograf.Web.API.Models.Bookings;
+using Ebiograf.Web.API.Models.Cinema;
 using Ebiograf.Web.API.Models.Movie;
+using Ebiograf.Web.API.Models.Show;
+using Ebiograf.Web.API.Models.Snacks;
 using Ebiograf.Web.API.ModelsDto;
+using Ebiograf.Web.API.ModelsDto.BookingDto;
+using Ebiograf.Web.API.ModelsDto.CinemaAddressDto;
+using Ebiograf.Web.API.ModelsDto.CinemaDto;
 using Ebiograf.Web.API.ModelsDto.GenreDto;
 using Ebiograf.Web.API.ModelsDto.MovieDto;
+using Ebiograf.Web.API.ModelsDto.ShowDto;
+using Ebiograf.Web.API.ModelsDto.SnackDto;
 using EBiograf.Web.Api.Models;
 
 namespace EBiograf.Web.Api.Helper
@@ -35,6 +44,13 @@ namespace EBiograf.Web.Api.Helper
             CreateMap<Genre, GenreDto>();
             CreateMap<GenreDto, Genre>();
             CreateMap<CreateGenre, Genre>().ReverseMap();
+            CreateMap<CinemaAddress, AddressDto>().ReverseMap();
+            CreateMap<Cinema, CinemaModelDto>().ReverseMap();
+            CreateMap<CinemaHall,CinemaHallDto>().ReverseMap();
+            CreateMap<Show, ShowDetailsDto>().ReverseMap();
+            CreateMap<Booking, BookingDto>().ReverseMap();
+            CreateMap<ShowSeat, ShowSeatDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
         }
     }
 }

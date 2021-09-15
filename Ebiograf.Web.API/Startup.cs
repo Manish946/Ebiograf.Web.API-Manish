@@ -25,6 +25,17 @@ using Ebiograf.Web.API.Repository.MovieRepo;
 using Newtonsoft.Json;
 using Ebiograf.Web.API.Repository.GenreRepo;
 using Ebiograf.Web.API.Services.GenreService;
+using Ebiograf.Web.API.Repository.CinemaAddressRepo;
+using Ebiograf.Web.API.Services.CinemaAddressService;
+using Ebiograf.Web.API.Repository.CinemaRepo;
+using Ebiograf.Web.API.Services.CinemaServices;
+using Ebiograf.Web.API.Repository.ShowRepo;
+using Ebiograf.Web.API.Services.ShowsService;
+using Ebiograf.Web.API.Models.Bookings;
+using Ebiograf.Web.API.Repository.BookingRepo;
+using Ebiograf.Web.API.Services.BookingsService;
+using Ebiograf.Web.API.Repository.SnackRepo;
+using Ebiograf.Web.API.Services.SnackService;
 
 namespace Ebiograf.Web.API
 {
@@ -97,10 +108,34 @@ namespace Ebiograf.Web.API
             // Adding User Scope so that we can call from Endpoint.
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
             services.AddScoped<IMovieRepository, MovieRepository>();
-            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<ImovieRepository, MovieService>();
+
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();
+
+            services.AddScoped<ICinemaAddressRepository, CinemaAddressRepository>();
+            services.AddScoped<ICinemaAddressService, CinemaAddressService>();
+
+            services.AddScoped<ICinemaRepository, CinemaRepository>();
+            services.AddScoped<ICinemaService, CinemaService>();
+
+            services.AddScoped<ICinemaHallRepository, CinemaHallRepository>();
+            services.AddScoped<ICinemaHallService, CinemaHallService>();
+
+            services.AddScoped<IShowRepository, ShowRepository>();
+            services.AddScoped<IShowService, ShowService>();
+
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IBookingService, BookingService>();
+
+            services.AddScoped<IShowSeatRepository, ShowSeatRepository>();
+            services.AddScoped<IShowSeatService, ShowSeatService>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+
             services.AddControllers()
                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
