@@ -36,6 +36,8 @@ using Ebiograf.Web.API.Repository.BookingRepo;
 using Ebiograf.Web.API.Services.BookingsService;
 using Ebiograf.Web.API.Repository.SnackRepo;
 using Ebiograf.Web.API.Services.SnackService;
+using Ebiograf.Web.API.Repository.PaymentRepo;
+using Ebiograf.Web.API.Services.PaymentsService;
 
 namespace Ebiograf.Web.API
 {
@@ -135,6 +137,12 @@ namespace Ebiograf.Web.API
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IOrderSnackRepository, OrderSnackRepository>();
+            services.AddScoped<IOrderSnackService, OrderSnackService>();
+
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             services.AddControllers()
                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

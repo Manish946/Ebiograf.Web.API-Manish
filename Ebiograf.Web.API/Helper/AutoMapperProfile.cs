@@ -51,6 +51,8 @@ namespace EBiograf.Web.Api.Helper
             CreateMap<Booking, BookingDto>().ReverseMap();
             CreateMap<ShowSeat, ShowSeatDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<OrderSnack, OrderSnackDto>().ReverseMap();
+            CreateMap<Payment, PaymentDto>().ReverseMap();
         }
     }
 }
