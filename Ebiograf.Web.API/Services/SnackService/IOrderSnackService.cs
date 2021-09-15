@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ebiograf.Web.API.Repository.SnackRepo
+namespace Ebiograf.Web.API.Services.SnackService
 {
-    public interface IOrderSnackRepository
+    public interface IOrderSnackService
     {
         public Task<IEnumerable<OrderSnack>> getOrderSnacks();
         public Task<OrderSnack> GetOrderSnackByID(int OrderSnackID);
