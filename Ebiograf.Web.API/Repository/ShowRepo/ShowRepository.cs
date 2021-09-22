@@ -46,6 +46,11 @@ namespace Ebiograf.Web.API.Repository.ShowRepo
             return await context.Shows.FindAsync(CinemaID);
 
         }
+        public async Task<IEnumerable<Show>> GetShowByMovieID(int MovieID)
+        {
+
+            return await context.Shows.Where(s => s.MovieID == MovieID).ToListAsync();
+        }
 
         public async Task<IEnumerable<Show>> GetShows()
         {

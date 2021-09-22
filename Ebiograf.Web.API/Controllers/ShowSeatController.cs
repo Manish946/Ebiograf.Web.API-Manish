@@ -54,6 +54,24 @@ namespace Ebiograf.Web.API.Controllers
             }
         }
 
+        [HttpGet("Show/{ShowID}")]
+        public async Task<IActionResult> GetShowSeatsByShowID(int ShowID)
+        {
+            try
+            {
+                var ShowSeat = await context.getShowSeatsByShowID(ShowID);
+                return Ok(ShowSeat);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+        }
+
+
+
         [HttpPost("CreateShowSeat")]
         public async Task<IActionResult> CreateShowSeat([FromBody] ShowSeatDto ShowSeat)
         {

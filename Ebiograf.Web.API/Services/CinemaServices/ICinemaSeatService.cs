@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ebiograf.Web.API.Repository.CinemaSeatRepo
+namespace Ebiograf.Web.API.Services.CinemaServices
 {
-    public interface ICinemaSeatRepository
+    public interface ICinemaSeatService
     {
         public Task<IEnumerable<CinemaSeat>> GetCinemaSeats();
         public Task<CinemaSeat> GetCinemaSeatByID(int CinemaSeatID);

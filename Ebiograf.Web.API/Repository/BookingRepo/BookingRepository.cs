@@ -28,7 +28,11 @@ namespace Ebiograf.Web.API.Repository.BookingRepo
             await context.SaveChangesAsync();
             return booking;
         }
-
+        public async Task<Booking> CreateBookingWithData(Booking booking)
+        {
+            await context.Bookings.AddAsync(booking);
+            return booking;
+        }
         public async Task<Booking> DeleteBooking(int BookingID)
         {
             var deleteBooking = await context.Bookings.FindAsync(BookingID);
@@ -49,7 +53,7 @@ namespace Ebiograf.Web.API.Repository.BookingRepo
 
         public async Task<IEnumerable<Booking>> getBookings()
         {
-            return await context.Bookings.ToListAsync();
+            return await context.Bookings.Include(b=>b.ShowSeats).ToListAsync();
         }
 
         public async Task<Booking> UpdateBooking(BookingDto UpdateBooking, int BookingID)

@@ -38,11 +38,26 @@ namespace Ebiograf.Web.API.Controllers
         }
 
         [HttpGet("{ShowID}")]
-        public async Task<IActionResult> GetShowID(int ShowID)
+        public async Task<IActionResult> GetShowByID(int ShowID)
         {
             try
             {
                 var Show = await context.GetShowByID(ShowID);
+                return Ok(Show);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+        }
+        [HttpGet("Movie/{MovieID}")]
+        public async Task<IActionResult> GetShowByMovieID(int MovieID)
+        {
+            try
+            {
+                var Show = await context.GetShowByMovieID(MovieID);
                 return Ok(Show);
             }
             catch (Exception ex)

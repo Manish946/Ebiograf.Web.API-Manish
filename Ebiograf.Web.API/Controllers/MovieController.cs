@@ -20,12 +20,10 @@ namespace Ebiograf.Web.API.Controllers
     public class MovieController : ControllerBase
     {
         public ImovieRepository context { get; set; }
-        private readonly IMapper mapper;
 
-        public MovieController(ImovieRepository _context, IMapper _mapper)
+        public MovieController(ImovieRepository _context)
         {
             context = _context;
-            mapper = _mapper;
         }
 
         [HttpGet]
@@ -34,6 +32,7 @@ namespace Ebiograf.Web.API.Controllers
             try
             {
                 var movies = await context.GetMovies();
+                
                 // var MovieWithGenre = mapper.Map<ICollection<MovieWithGenreName>>(movies);
 
                 return Ok(movies);
@@ -52,7 +51,7 @@ namespace Ebiograf.Web.API.Controllers
         {
             try
             {
-                var MovieByID = await context.GetMoviesByID(MovieID);
+                var MovieByID = await context.GetMoviesByID(MovieID).ConfigureAwait(false);
 
                 if (MovieByID == null)
                 {

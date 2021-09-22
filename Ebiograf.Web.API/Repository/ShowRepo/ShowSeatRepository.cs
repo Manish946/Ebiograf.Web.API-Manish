@@ -52,7 +52,10 @@ namespace Ebiograf.Web.API.Repository.ShowRepo
         {
             return await context.ShowSeats.ToListAsync();
         }
-
+        public async Task<IEnumerable<ShowSeat>> getShowSeatsByShowID(int ShowID)
+        {
+            return await context.ShowSeats.Where(ss => ss.ShowID == ShowID).ToListAsync();
+        }
         public async Task<ShowSeat> UpdateShowSeat(ShowSeatDto UpdateShowSeat, int ShowSeatID)
         {
             var updatedShowSeat = mapper.Map<ShowSeat>(UpdateShowSeat);

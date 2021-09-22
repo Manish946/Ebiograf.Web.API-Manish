@@ -11,7 +11,7 @@ namespace EBiograf.Web.Api.Repository.UserRepo
 {
     public class UserRepository : IUserRepository
     {
-        private EBiografDbContext context;
+        private readonly EBiografDbContext context;
 
         public UserRepository(EBiografDbContext _context)  // Dependency Injection
         {
@@ -24,7 +24,7 @@ namespace EBiograf.Web.Api.Repository.UserRepo
             {
                 return null;
             }
-            var user = await context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
             if (user == null)
             {
@@ -58,14 +58,14 @@ namespace EBiograf.Web.Api.Repository.UserRepo
             {
                 throw new AppException("Password is required");
             }
-            if (context.Users.Any(x => x.UserName == user.UserName))
+            if (await context.Users.AnyAsync(x => x.UserName == user.UserName))
             {
                 throw new AppException("Username \"" + user.UserName + "\" is already taken");
             }
             user.Password = CreatePasswordHash(password);
             user.DateCreated = DateTime.UtcNow;
             await context.Users.AddAsync(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return user;
         }
 
@@ -75,7 +75,7 @@ namespace EBiograf.Web.Api.Repository.UserRepo
             if (user != null)
             {
                 context.Users.Remove(user);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             return user;
         }
@@ -99,7 +99,7 @@ namespace EBiograf.Web.Api.Repository.UserRepo
             if (!string.IsNullOrWhiteSpace(user.UserName) && user.UserName != Updateuser.UserName)
             {
                 // Throw error if the new username is already taken.
-                if (context.Users.Any(x => x.UserName == user.UserName))
+                if (await context.Users.AnyAsync(x => x.UserName == user.UserName))
                 {
                     throw new AppException("Username " + user.UserName + "is already taken");
 
@@ -132,13 +132,14 @@ namespace EBiograf.Web.Api.Repository.UserRepo
 
             }
             context.Users.Update(Updateuser);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Updateuser;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await context.Users.ToListAsync();
         }
+
     }
 }

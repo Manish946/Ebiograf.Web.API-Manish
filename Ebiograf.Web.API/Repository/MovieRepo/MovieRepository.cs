@@ -50,7 +50,7 @@ namespace Ebiograf.Web.API.Repository.MovieRepo
 
             foreach (int item in Genres)
             {
-
+                
                 //var addedGenre = context.Genres.SingleOrDefault(g => g.GenreID == item);
                 //Movie.Genres.Add(addedGenre);
                 Movie.Genres.Add(availableGenre
@@ -123,7 +123,7 @@ namespace Ebiograf.Web.API.Repository.MovieRepo
                 UpdateMovie.TrailerLink = Movie.TrailerLink;
             }
             context.Movies.Update(UpdateMovie);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return UpdateMovie;
 
         }
@@ -150,13 +150,15 @@ namespace Ebiograf.Web.API.Repository.MovieRepo
                 .Select(g=> g.GenreName) .ToArray())
                 .ToListAsync();
             */
-
-            return await mapper.ProjectTo<MovieWithGenreName>(context.Movies).ToListAsync();
+            //var movies = mapper.Map<IEnumerable<MovieWithGenreName>>(context.Movies.Include(g=>g.Genres.Select(g.));
+             
+            return await mapper.ProjectTo< MovieWithGenreName>(context.Movies).ToListAsync();
+            //return movies;
         }
 
         public async Task<MovieWithGenreName> GetMoviesByID(int MovieID)
         {
-            return await mapper.ProjectTo<MovieWithGenreName>(context.Movies)
+            return await mapper.ProjectTo< MovieWithGenreName>(context.Movies)
                 .Where(x => x.MovieID == MovieID)
                 .SingleOrDefaultAsync();
         }

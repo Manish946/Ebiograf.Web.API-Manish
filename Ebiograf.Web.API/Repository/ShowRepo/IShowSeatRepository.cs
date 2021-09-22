@@ -11,6 +11,7 @@ namespace Ebiograf.Web.API.Repository.ShowRepo
     {
         public Task<IEnumerable<ShowSeat>> getShowSeats();
         public Task<ShowSeat> GetShowSeatByID(int ShowSeatID);
+        public Task<IEnumerable<ShowSeat>> getShowSeatsByShowID(int ShowID);
         public Task<ShowSeat> CreateShowSeat(ShowSeatDto createShowSeat);
         public Task<ShowSeat> UpdateShowSeat(ShowSeatDto updateShowSeat, int ShowSeatID);
         public Task<ShowSeat> DeleteShowSeat(int ShowSeatID);
