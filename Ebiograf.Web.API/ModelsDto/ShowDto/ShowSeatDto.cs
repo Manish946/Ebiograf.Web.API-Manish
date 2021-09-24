@@ -23,7 +23,7 @@ namespace Ebiograf.Web.API.ModelsDto.ShowDto
         public int CinemaSeatID { get; set; }
  
 
-        public int BookingID { get; set; }
+        public int? BookingID { get; set; }
 
     }
 }

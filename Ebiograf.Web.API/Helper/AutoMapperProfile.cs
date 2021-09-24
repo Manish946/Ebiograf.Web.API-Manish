@@ -26,19 +26,17 @@ namespace EBiograf.Web.Api.Helper
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserModel>();
-            CreateMap<RegisterModelUser, User>();
-            CreateMap<UpdateModel, User>();
+            CreateMap<User, UserModel>().ReverseMap();
+            CreateMap<RegisterModelUser, User>().ReverseMap();
+            CreateMap<UpdateModel, User>().ReverseMap();
             //CreateMap<MovieWithGenreName, Movie>().ReverseMap();
             // This will Map the remaning property and in this case Gernes Names will be stored in an array from Collection Genre.
             CreateMap<Movie, MovieWithGenreName>()
                 .ForMember(movie => movie.Genres,
                 igenre => igenre.MapFrom(genre => genre.Genres
-                .Select(g => g.GenreName).ToArray()));
-
-            CreateMap<MovieWithGenreName, Movie>()
-                .ForMember(Movie => Movie.Genres, Igenre => Igenre.MapFrom(genre => new Genre() { }));
-
+                .Select(g => g.GenreName).ToArray())).ReverseMap();
+           //CreateMap<MovieWithGenreName, Movie>().ReverseMap();
+            //    .ForMember(Movie => Movie.Genres, Igenre => Igenre.MapFrom(genre => new Genre() { }));
             CreateMap<CreateMovieModel, Movie>().ReverseMap();
             CreateMap<UpdateMovieModel, Movie>().ReverseMap();
             CreateMap<Genre, GenreDto>();
@@ -46,6 +44,7 @@ namespace EBiograf.Web.Api.Helper
             CreateMap<CreateGenre, Genre>().ReverseMap();
             CreateMap<CinemaAddress, AddressDto>().ReverseMap();
             CreateMap<Cinema, CinemaModelDto>().ReverseMap();
+            CreateMap<CinemaSeat, CinemaSeatModelDto>().ReverseMap();
             CreateMap<CinemaHall,CinemaHallDto>().ReverseMap();
             CreateMap<Show, ShowDetailsDto>().ReverseMap();
             CreateMap<Booking, BookingDto>().ReverseMap();

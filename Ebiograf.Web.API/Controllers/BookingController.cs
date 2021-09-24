@@ -1,4 +1,5 @@
-﻿using Ebiograf.Web.API.ModelsDto.BookingDto;
+﻿using Ebiograf.Web.API.Models.Bookings;
+using Ebiograf.Web.API.ModelsDto.BookingDto;
 using Ebiograf.Web.API.Services.BookingsService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +55,23 @@ namespace Ebiograf.Web.API.Controllers
             }
         }
 
+        [HttpGet("User/{UserID}")]
+        public async Task<IActionResult> GetBookingByUserID(int UserID)
+        {
+            try
+            {
+                var Booking = await context.GetBookingByuserID(UserID);
+                return Ok(Booking);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+        }
+
+
         [HttpPost("CreateBooking")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingDto Booking)
         {
@@ -69,7 +87,21 @@ namespace Ebiograf.Web.API.Controllers
 
             }
         }
+        [HttpPost("CreateBookingWithData")]
+        public async Task<IActionResult> CreateBookingWithData([FromBody] Booking Booking)
+        {
+            try
+            {
+                var newBooking = await context.CreateBookingWithData(Booking);
+                return Ok(newBooking);
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(new { message = ex.Message });
+
+            }
+        }
 
         [HttpPut("UpdateBooking/{BookingID}")]
         public async Task<IActionResult> UpdateBooking([FromBody] BookingDto Booking, int BookingID)

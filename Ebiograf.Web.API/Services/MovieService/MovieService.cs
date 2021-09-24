@@ -11,7 +11,7 @@ using Ebiograf.Web.API.ModelsDto.MovieDto;
 
 namespace Ebiograf.Web.API.Services.MovieService
 {
-    public class MovieService:ImovieRepository
+    public class MovieService: IMovieService
     {
         private readonly IMovieRepository movieRepo;
         private  IMapper mapper;

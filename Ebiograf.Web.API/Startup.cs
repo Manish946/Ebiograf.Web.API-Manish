@@ -38,6 +38,8 @@ using Ebiograf.Web.API.Repository.SnackRepo;
 using Ebiograf.Web.API.Services.SnackService;
 using Ebiograf.Web.API.Repository.PaymentRepo;
 using Ebiograf.Web.API.Services.PaymentsService;
+using Ebiograf.Web.API.Repository.CinemaSeatRepo;
+using Ebiograf.Web.API.Services.CinemaSeatServices;
 
 namespace Ebiograf.Web.API
 {
@@ -59,13 +61,13 @@ namespace Ebiograf.Web.API
             {
                 services.AddDbContext<EBiografDbContext>();
             }
-            
+
             services.AddCors();
             services.AddControllers();
             // Adding DbContext class to services. connection string to mssql database  Then we can add migration.
-            services.AddDbContext<EBiografDbContext>(options =>
-             options.UseSqlServer(Configuration.GetConnectionString("Connection"))
-              );
+            services.AddDbContext<EBiografDbContext>(options => {
+            options.UseSqlServer(Configuration.GetConnectionString("Connection"));
+              }, ServiceLifetime.Transient);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -112,7 +114,7 @@ namespace Ebiograf.Web.API
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IMovieRepository, MovieRepository>();
-            services.AddScoped<ImovieRepository, MovieService>();
+            services.AddScoped<IMovieService, MovieService>();
 
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();
@@ -143,6 +145,10 @@ namespace Ebiograf.Web.API
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
+
+            services.AddScoped<ICinemaSeatRepository, CinemaSeatRepository>();
+            services.AddScoped<ICinemaSeatService, CinemaSeatService>();
+
 
             services.AddControllers()
                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

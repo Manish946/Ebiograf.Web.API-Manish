@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ebiograf.Web.API", "Ebiograf.Web.API\Ebiograf.Web.API.csproj", "{A86DC7FF-0CBA-46B1-AA31-9D5F4A9B9A75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ebiograf.Web.API", "Ebiograf.Web.API\Ebiograf.Web.API.csproj", "{A86DC7FF-0CBA-46B1-AA31-9D5F4A9B9A75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ebiograf-XunitTest", "Ebiograf-XunitTest\Ebiograf-XunitTest.csproj", "{FFBB792C-51AB-4048-B5AE-58C0087918EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A86DC7FF-0CBA-46B1-AA31-9D5F4A9B9A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A86DC7FF-0CBA-46B1-AA31-9D5F4A9B9A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A86DC7FF-0CBA-46B1-AA31-9D5F4A9B9A75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBB792C-51AB-4048-B5AE-58C0087918EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBB792C-51AB-4048-B5AE-58C0087918EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBB792C-51AB-4048-B5AE-58C0087918EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBB792C-51AB-4048-B5AE-58C0087918EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

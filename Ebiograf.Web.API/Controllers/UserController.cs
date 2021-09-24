@@ -35,10 +35,11 @@ namespace Ebiograf.Web.Api.Controllers
         }
 
         //AllowAnonymous lets users who have not been authenticated access the action or controller.In short, it knows based on the token it receives from the client.
-
+        
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public  async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
+        //When passing any sensitive data (usernames, passwords, credit card information, etc.) via the request body, it is imperative to use [FromBody] in every case.
         {
             try
             {
@@ -72,7 +73,7 @@ namespace Ebiograf.Web.Api.Controllers
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
-            
+
 
         }
         [AllowAnonymous]
@@ -103,6 +104,7 @@ namespace Ebiograf.Web.Api.Controllers
             {
                 var users = await context.GetAllUsers();
                 var model = _mapper.Map<IList<UserModel>>(users);
+
                 return Ok(model);
             }
             catch (Exception ex)
@@ -112,8 +114,9 @@ namespace Ebiograf.Web.Api.Controllers
 
             }
 
-
+            //Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYiLCJuYmYiOjE2MzE4MTQxNTEsImV4cCI6MTYzMjQxODk1MSwiaWF0IjoxNjMxODE0MTUxfQ.1LVukqBLZR2GiZI1P4_9ItrxuVALHXPDRR - VzkrBagM
         }
+
 
         [HttpGet("{id}")]
         [Authorize]
@@ -134,7 +137,7 @@ namespace Ebiograf.Web.Api.Controllers
             }
 
         }
-        
+
         [HttpDelete("id")]
         [Authorize]
 
@@ -156,7 +159,7 @@ namespace Ebiograf.Web.Api.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> Update(int id, [FromBody]UpdateModel model)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateModel model)
         {
             // Map modelto entity and set id.
             var user = _mapper.Map<User>(model);
@@ -165,7 +168,7 @@ namespace Ebiograf.Web.Api.Controllers
             try
             {
                 // Update user
-               await context.Update(user, model.Password);
+                await context.Update(user, model.Password);
                 return Ok();
             }
             catch (Exception e)
@@ -174,5 +177,6 @@ namespace Ebiograf.Web.Api.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+
     }
 }

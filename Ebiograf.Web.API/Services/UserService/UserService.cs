@@ -27,8 +27,7 @@ namespace EBiograf.Web.Api.Services
         public async Task<User> delete(int id) => await userRepo.delete(id);
 
 
-        public async Task<List<User>> GetAllUsers() => await userRepo.GetAllUsers();
-
+        public async Task<IEnumerable<User>> GetAllUsers() => await userRepo.GetAllUsers();
 
         public async Task<User> GetById(int id) => await userRepo.GetById(id);
 

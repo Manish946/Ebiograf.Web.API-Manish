@@ -49,7 +49,7 @@ namespace Ebiograf.Web.API.Repository.SnackRepo
 
         public async Task<IEnumerable<OrderSnack>> getOrderSnacks()
         {
-            return await context.OrderSnacks.ToListAsync();
+            return await context.OrderSnacks.Include(os=>os.Booking).Include(os=>os.Product).ToListAsync();
         }
 
         public async Task<OrderSnack> UpdateOrderSnack(OrderSnackDto UpdateOrderSnack, int OrderSnackID)
