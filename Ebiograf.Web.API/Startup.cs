@@ -114,7 +114,7 @@ namespace Ebiograf.Web.API
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IMovieRepository, MovieRepository>();
-            services.AddScoped<ImovieRepository, MovieService>();
+            services.AddScoped<IMovieService, MovieService>();
 
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IGenreService, GenreService>();

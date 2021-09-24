@@ -55,6 +55,23 @@ namespace Ebiograf.Web.API.Controllers
             }
         }
 
+        [HttpGet("User/{UserID}")]
+        public async Task<IActionResult> GetBookingByUserID(int UserID)
+        {
+            try
+            {
+                var Booking = await context.GetBookingByuserID(UserID);
+                return Ok(Booking);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+
+            }
+        }
+
+
         [HttpPost("CreateBooking")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingDto Booking)
         {

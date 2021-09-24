@@ -35,10 +35,11 @@ namespace Ebiograf.Web.Api.Controllers
         }
 
         //AllowAnonymous lets users who have not been authenticated access the action or controller.In short, it knows based on the token it receives from the client.
-
+        
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
+        //When passing any sensitive data (usernames, passwords, credit card information, etc.) via the request body, it is imperative to use [FromBody] in every case.
         {
             try
             {

@@ -19,9 +19,9 @@ namespace Ebiograf.Web.API.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        public ImovieRepository context { get; set; }
+        public IMovieService context { get; set; }
 
-        public MovieController(ImovieRepository _context)
+        public MovieController(IMovieService _context)
         {
             context = _context;
         }
@@ -32,9 +32,13 @@ namespace Ebiograf.Web.API.Controllers
             try
             {
                 var movies = await context.GetMovies();
-                
-                // var MovieWithGenre = mapper.Map<ICollection<MovieWithGenreName>>(movies);
 
+                // var MovieWithGenre = mapper.Map<ICollection<MovieWithGenreName>>(movies);
+                if (movies == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, movies);
+                }
+                else if (movies.Count() == 0) { return NoContent(); }
                 return Ok(movies);
             }
             catch (AppException ex)
@@ -55,7 +59,7 @@ namespace Ebiograf.Web.API.Controllers
 
                 if (MovieByID == null)
                 {
-                    return BadRequest(new { message = "MovieID is null." });
+                    return NotFound();
                 }
 
                 return Ok(MovieByID);
@@ -89,10 +93,14 @@ namespace Ebiograf.Web.API.Controllers
 
             try
             {
+                if (!ModelState.IsValid ||Createmodel ==null)
+                {
+                    return BadRequest(ModelState);
+                }
                 // Create user
                 var movie = await context.CreateMovie(Createmodel);
 
-                return Ok(movie);
+                return Created("",movie);
             }
             catch (AppException ex)
             {
@@ -122,6 +130,10 @@ namespace Ebiograf.Web.API.Controllers
             try
             {
                 var movieToDelete = await context.DeleteMovie(MovieID);
+                if (movieToDelete == null)
+                {
+                    return NotFound();
+                }
                 return Ok();
             }
             catch (Exception ex)

@@ -50,6 +50,11 @@ namespace Ebiograf.Web.API.Repository.BookingRepo
             return await context.Bookings.FindAsync(BookingID);
 
         }
+        public async Task<IEnumerable<Booking>> GetBookingByuserID(int userID)
+        {
+            return await context.Bookings.Where(b => b.UserID == userID).ToListAsync();
+
+        }
 
         public async Task<IEnumerable<Booking>> getBookings()
         {

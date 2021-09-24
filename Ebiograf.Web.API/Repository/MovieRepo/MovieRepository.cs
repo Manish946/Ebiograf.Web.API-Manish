@@ -17,7 +17,8 @@ namespace Ebiograf.Web.API.Repository.MovieRepo
         // Gettings Database from Dbcontext. Prevents over calling or repeating database to use data.
         private readonly EBiografDbContext context;
         private IMapper mapper;
-        public MovieRepository(EBiografDbContext _context, IMapper _mapper)
+        public MovieRepository(EBiografDbContext _context, IMapper _mapper) // Dependency Injection
+        //Dependency Injection (DI) is a software design pattern that allows us to develop loosely coupled code.
         {
             context = _context;
             mapper = _mapper;
